@@ -5,7 +5,7 @@ package br.com.veloso.agenda.modelo;
  */
 public class Aluno {
     private Long id;
-    private  String nome;
+    private String nome;
     private String endereco;
     private String telefone;
     private String site;
