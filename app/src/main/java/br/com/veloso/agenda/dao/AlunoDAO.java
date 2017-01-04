@@ -1,5 +1,6 @@
 package br.com.veloso.agenda.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -28,8 +29,17 @@ public class AlunoDAO extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insere(Aluno aluno){
-        String sql = "INSERT INTO Alunos (nome, endereco, telefone, site, nota) values(" + aluno.getNome() + "," ;
-        return true;
+    public void insere(Aluno aluno) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues dados = new ContentValues();
+        dados.put("nome", aluno.getNome());
+        dados.put("endereco", aluno.getEndereco());
+        dados.put("telefone", aluno.getTelefone());
+        dados.put("site", aluno.getTelefone());
+        dados.put("nota", aluno.getNota());
+
+        //Qual é a tabela, linha em branco, Content Values(colunas do da tabela, dictionay chave e valor)
+        db.insert("Alunos", null, dados);
     }
 }

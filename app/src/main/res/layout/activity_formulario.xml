@@ -1,44 +1,43 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <EditText
+            android:id="@+id/formulario_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome"
-            android:id="@+id/formulario_nome"/>
+            android:hint="Nome" />
 
         <EditText
+            android:id="@+id/formulario_endereco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Endereco"
-            android:id="@+id/formulario_endereco"/>
+            android:hint="Endereco" />
 
         <EditText
+            android:id="@+id/formulario_telefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Telefone"
-            android:id="@+id/formulario_telefone"/>
+            android:hint="Telefone" />
 
         <EditText
+            android:id="@+id/formulario_site"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Site"
-            android:id="@+id/formulario_site"/>
+            android:hint="Site" />
 
         <RatingBar
+            android:id="@+id/formulario_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:max="10"
-            android:numStars="5"
-            android:id="@+id/formulario_star"/>
+            android:numStars="5" />
 
 
     </LinearLayout>

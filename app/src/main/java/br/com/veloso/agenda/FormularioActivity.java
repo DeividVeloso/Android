@@ -25,7 +25,7 @@ public class FormularioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
 
-         helper = new FormularioHelper(this);
+        helper = new FormularioHelper(this);
     }
 
     @Override
@@ -44,6 +44,9 @@ public class FormularioActivity extends AppCompatActivity {
                 Toast.makeText(FormularioActivity.this, "Aluno " + aluno.getNome() + "salvo!", Toast.LENGTH_SHORT).show();
                 AlunoDAO dao = new AlunoDAO(this);
                 dao.insere(aluno);
+
+                //Assim que usar o DAO chamar o método close para fechar a conexão com o banco
+                dao.close();
 
                 finish();
                 break;
