@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,6 +28,23 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
 
         listaAlunos = (ListView) findViewById(R.id.lista_alunos);
+
+        listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(position);
+
+            }
+        });
+
+        listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                return false;
+            }
+        });
+
+
         btnAdd = (Button) findViewById(R.id.lista_novoaluno);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +55,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
         });
 
-        //Criando um menu de contexto
+        //Criando um menu de contexto, para a Lista de Alunos
         registerForContextMenu(listaAlunos);
     }
 
@@ -74,6 +92,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 //Para pegar a informação da lista, primeiro precisamos dizer que esse menuInfo é um menu de um Adapter
                 //Só estou convertendo meu menu Info par aum menu mais especifico de adpter
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+                //Pega o aluno da que selecionei na lista de alunos
+                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
+
+                //Chamar o método de deletar da classe AlunoDAO
+                AlunoDAO dao = new AlunoDAO(ListaAlunosActivity.this);
+                dao.deleta(aluno);
+                dao.close();
+                Toast.makeText(ListaAlunosActivity.this,"Aluno " + aluno.getNome() + " removido",Toast.LENGTH_SHORT).show();
+                carregaLista();
                 return false;
             }
         });

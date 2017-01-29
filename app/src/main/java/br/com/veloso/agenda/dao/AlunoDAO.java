@@ -40,7 +40,7 @@ public class AlunoDAO extends SQLiteOpenHelper {
         dados.put("nome", aluno.getNome());
         dados.put("endereco", aluno.getEndereco());
         dados.put("telefone", aluno.getTelefone());
-        dados.put("site", aluno.getTelefone());
+        dados.put("site", aluno.getSite());
         dados.put("nota", aluno.getNota());
 
         //Qual é a tabela, linha em branco, Content Values(colunas do da tabela, dictionay chave e valor)
@@ -78,5 +78,15 @@ public class AlunoDAO extends SQLiteOpenHelper {
 
 
         return alunos;
+    }
+
+    public void deleta(Aluno aluno) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String[] params = {aluno.getId().toString()};
+        //Recebe o Nome da Tabela, Where, Parametros
+        //Where id = ?
+        //? é o valor do parametro
+        db.delete("Alunos", "id = ?", params);
     }
 }
