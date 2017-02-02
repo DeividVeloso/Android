@@ -30,20 +30,24 @@ public class ListaAlunosActivity extends AppCompatActivity {
         listaAlunos = (ListView) findViewById(R.id.lista_alunos);
 
         listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //parent = lista que clicamos
+            //View = a view que clicamos o item
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> lista, View item, int position, long id) {
                 Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(position);
 
+                //Depois de clicado no item vamos abrir o formularioactivity para poder editar os dados
+                Intent intentVaiProFromulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+                //Precisamos mandar os dados do aluno clicado da lista para o FormularioActivity através do Intent
+                //Para isso vamos usar o putExtra()
+                //Usamos chave e valor, pois poderiamos passar mais coisas na intent, dessa forma fica definido o que vou querer recuperar pela chave "Aluno"
+                //Passando o objeto Aluno ele não consegue enviar dessa forma
+                intentVaiProFromulario.putExtra("aluno", aluno);
+                startActivity(intentVaiProFromulario);
+
+                Toast.makeText(ListaAlunosActivity.this,"Aluno " + aluno.getNome() + " Clicado",Toast.LENGTH_SHORT).show();
             }
         });
-
-        listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                return false;
-            }
-        });
-
 
         btnAdd = (Button) findViewById(R.id.lista_novoaluno);
 

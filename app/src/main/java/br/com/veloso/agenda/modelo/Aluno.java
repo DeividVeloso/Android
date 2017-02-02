@@ -1,9 +1,11 @@
 package br.com.veloso.agenda.modelo;
 
+import java.io.Serializable;
+
 /**
  * Created by deivi on 27/09/2016.
  */
-public class Aluno {
+public class Aluno implements Serializable{
     private Long id;
     private String nome;
     private String endereco;
