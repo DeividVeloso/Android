@@ -89,4 +89,20 @@ public class AlunoDAO extends SQLiteOpenHelper {
         //? é o valor do parametro
         db.delete("Alunos", "id = ?", params);
     }
+
+    public void altera(Aluno aluno) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String[] params = {aluno.getId().toString()};
+
+        ContentValues dados = new ContentValues();
+        dados.put("nome", aluno.getNome());
+        dados.put("endereco", aluno.getEndereco());
+        dados.put("telefone", aluno.getTelefone());
+        dados.put("site", aluno.getSite());
+        dados.put("nota", aluno.getNota());
+
+        db.update("Alunos",dados,"id = ?",params);
+
+    }
 }

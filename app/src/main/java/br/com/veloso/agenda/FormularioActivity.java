@@ -50,7 +50,13 @@ public class FormularioActivity extends AppCompatActivity {
                 Aluno aluno = helper.pegaAluno();
                 Toast.makeText(FormularioActivity.this, "Aluno " + aluno.getNome() + "salvo!", Toast.LENGTH_SHORT).show();
                 AlunoDAO dao = new AlunoDAO(this);
-                dao.insere(aluno);
+
+                if(aluno.getId() != null){
+                    dao.altera(aluno);
+                }else{
+                    dao.insere(aluno);
+                }
+
 
                 //Assim que usar o DAO chamar o método close para fechar a conexão com o banco
                 dao.close();

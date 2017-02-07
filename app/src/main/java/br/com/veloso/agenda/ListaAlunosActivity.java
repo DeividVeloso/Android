@@ -94,7 +94,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
 
                 //Para pegar a informação da lista, primeiro precisamos dizer que esse menuInfo é um menu de um Adapter
-                //Só estou convertendo meu menu Info par aum menu mais especifico de adpter
+                //Só estou convertendo meu menu Info para um menu mais especifico de adpter
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
                 //Pega o aluno da que selecionei na lista de alunos
