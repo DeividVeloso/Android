@@ -1,6 +1,8 @@
 package br.com.veloso.agenda;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Browser;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -45,7 +47,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 intentVaiProFromulario.putExtra("aluno", aluno);
                 startActivity(intentVaiProFromulario);
 
-                Toast.makeText(ListaAlunosActivity.this,"Aluno " + aluno.getNome() + " Clicado",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListaAlunosActivity.this, "Aluno " + aluno.getNome() + " Clicado", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -85,6 +87,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
     //menuInfo é quem diz que item da lista foi clicado
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
+
+        MenuItem itemSite = menu.add("Visitar site");
+        Intent intentSite = new Intent(Intent.ACTION_VIEW);
+
+        String site = aluno.getSite();
+        if(!site.startsWith("http://")){
+            site = "http://" + site;
+        }
+
+        intentSite.setData(Uri.parse(site));
+        //Uma forma melhor de fazer o click do item do botão para enviar para outra Activity
+        itemSite.setIntent(intentSite);
+
         //criando o menu na mão
         //Guardar a referencia do menu click deletar
         MenuItem deletar = menu.add("Deletar");
@@ -93,18 +111,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                //Para pegar a informação da lista, primeiro precisamos dizer que esse menuInfo é um menu de um Adapter
-                //Só estou convertendo meu menu Info para um menu mais especifico de adpter
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-
-                //Pega o aluno da que selecionei na lista de alunos
-                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
-
                 //Chamar o método de deletar da classe AlunoDAO
                 AlunoDAO dao = new AlunoDAO(ListaAlunosActivity.this);
                 dao.deleta(aluno);
                 dao.close();
-                Toast.makeText(ListaAlunosActivity.this,"Aluno " + aluno.getNome() + " removido",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListaAlunosActivity.this, "Aluno " + aluno.getNome() + " removido", Toast.LENGTH_SHORT).show();
                 carregaLista();
                 return false;
             }
