@@ -1,8 +1,11 @@
 package br.com.veloso.agenda;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Browser;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -15,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.jar.Manifest;
 
 import br.com.veloso.agenda.dao.AlunoDAO;
 import br.com.veloso.agenda.modelo.Aluno;
@@ -90,6 +94,39 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
+
+        MenuItem itemLigar = menu.add("Ligar");
+        itemLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                //Para checar a permissão usar a classe ActivityCompat
+                //Primeiro veirificar se já tenho a permissão
+                //o RETORNO DA FUNÇÃO checkSelfPermission TEM QUE SER DIFERENTE DE PackageManager.PERMISSION_GRANTED QUER DIZER QUE O USUÁRIO AINDA NÃO TEM PERMISSÃO PARA USAR
+                if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ){
+                    //Já que ele não tem permissão vou fazer um solicitação
+                    //Contexto -- um array de permissão -- RequestCode
+                    ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[] {android.Manifest.permission.CALL_PHONE}, 123 );
+
+                }else{
+                    Intent intentLigar = new Intent(Intent.ACTION_CALL);
+                    intentLigar.setData(Uri.parse("tel:" + aluno.getTelefone()));
+                    startActivity(intentLigar);
+                }
+
+
+                return false;
+            }
+        });
+
+        MenuItem itemSMS = menu.add("Enviar SMS");
+        Intent intentSMS = new Intent(Intent.ACTION_VIEW);
+        intentSMS.setData(Uri.parse("sms:" + aluno.getTelefone()));
+        itemSMS.setIntent(intentSMS);
+
+        MenuItem itemMaps = menu.add("Visualizar no mapa");
+        Intent intentMaps = new Intent(Intent.ACTION_VIEW);
+        intentMaps.setData(Uri.parse("geo:0,0?q=" + aluno.getEndereco()));
+        itemMaps.setIntent(intentMaps);
 
         MenuItem itemSite = menu.add("Visitar site");
         Intent intentSite = new Intent(Intent.ACTION_VIEW);
