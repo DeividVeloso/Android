@@ -125,7 +125,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         MenuItem itemMaps = menu.add("Visualizar no mapa");
         Intent intentMaps = new Intent(Intent.ACTION_VIEW);
-        intentMaps.setData(Uri.parse("geo:0,0?q=" + aluno.getEndereco()));
+        intentMaps.setData(Uri.parse("geo:0,0?z=14&q=" + aluno.getEndereco()));
         itemMaps.setIntent(intentMaps);
 
         MenuItem itemSite = menu.add("Visitar site");
