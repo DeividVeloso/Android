@@ -1,6 +1,7 @@
 package br.com.veloso.agenda;
 
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import br.com.veloso.agenda.modelo.Aluno;
@@ -15,6 +16,8 @@ public class FormularioHelper {
     private final EditText campoTelefone;
     private final EditText campoSite;
     private final RatingBar campoNota;
+    private final ImageView imageFoto;
+
     private Aluno aluno;
 
     public FormularioHelper(FormularioActivity activity)
@@ -24,6 +27,7 @@ public class FormularioHelper {
          campoTelefone = (EditText) activity.findViewById(R.id.formulario_telefone);
          campoSite = (EditText) activity.findViewById(R.id.formulario_site);
          campoNota = (RatingBar) activity.findViewById(R.id.formulario_star);
+        imageFoto = (ImageView) activity.findViewById(R.id.formulario_foto);
          aluno = new Aluno();
     }
 
@@ -33,6 +37,7 @@ public class FormularioHelper {
         aluno.setTelefone(campoTelefone.getText().toString());
         aluno.setSite(campoSite.getText().toString());
         aluno.setNota(Double.valueOf(campoNota.getProgress()));
+        aluno.setCaminhoFoto(imageFoto.getTag().toString());
 
         return aluno;
     }

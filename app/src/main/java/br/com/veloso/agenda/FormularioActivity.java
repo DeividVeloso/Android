@@ -77,6 +77,7 @@ public class FormularioActivity extends AppCompatActivity {
                 foto.setImageBitmap(bitmapReduzido);
                 //vamos  pedir para a foto preencher o imagemview por completo
                 foto.setScaleType(ImageView.ScaleType.FIT_XY);
+                foto.setTag(caminhoFoto);
             }
         }
     }
