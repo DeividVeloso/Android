@@ -1,5 +1,7 @@
 package br.com.veloso.agenda;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -27,7 +29,7 @@ public class FormularioHelper {
          campoTelefone = (EditText) activity.findViewById(R.id.formulario_telefone);
          campoSite = (EditText) activity.findViewById(R.id.formulario_site);
          campoNota = (RatingBar) activity.findViewById(R.id.formulario_star);
-        imageFoto = (ImageView) activity.findViewById(R.id.formulario_foto);
+         imageFoto = (ImageView) activity.findViewById(R.id.formulario_foto);
          aluno = new Aluno();
     }
 
@@ -37,7 +39,9 @@ public class FormularioHelper {
         aluno.setTelefone(campoTelefone.getText().toString());
         aluno.setSite(campoSite.getText().toString());
         aluno.setNota(Double.valueOf(campoNota.getProgress()));
-        aluno.setCaminhoFoto(imageFoto.getTag().toString());
+        if(imageFoto.getTag() != null) {
+            aluno.setCaminhoFoto(imageFoto.getTag().toString());
+        }
 
         return aluno;
     }
@@ -48,6 +52,18 @@ public class FormularioHelper {
         campoTelefone.setText(aluno.getTelefone());
         campoSite.setText(aluno.getSite());
         campoNota.setProgress(aluno.getNota().intValue());
+        carregaImagem(aluno.getCaminhoFoto());
         this.aluno = aluno;
+    }
+
+    public void carregaImagem(String caminhoFoto) {
+            if (caminhoFoto != null){
+            Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+            Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300,300, true);
+            imageFoto.setImageBitmap(bitmapReduzido);
+            //vamos  pedir para a foto preencher o imagemview por completo
+            imageFoto.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageFoto.setTag(caminhoFoto);
+        }
     }
 }

@@ -66,18 +66,7 @@ public class FormularioActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK){
             if (requestCode == CODIGO_CAMERA){
-                ImageView foto = (ImageView) findViewById(R.id.formulario_foto);
-                //Vamos setar a foto no componente
-                //Vamos usar o bitmap, precisamos converter para o byte a imagem
-                //Temos que acessar o caminho da foto, então vamos declar como um atributo da classe
-                Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-                //Reduzindo a foto
-                //Parametros = foto, dimensao x dimensao, passar um filtro para não ficar borrada a imagem, pois ele retira pixels da foto.
-                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300,300, true);
-                foto.setImageBitmap(bitmapReduzido);
-                //vamos  pedir para a foto preencher o imagemview por completo
-                foto.setScaleType(ImageView.ScaleType.FIT_XY);
-                foto.setTag(caminhoFoto);
+               helper.carregaImagem(caminhoFoto);
             }
         }
     }
